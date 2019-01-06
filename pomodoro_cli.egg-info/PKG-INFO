@@ -1,0 +1,27 @@
+Metadata-Version: 1.1
+Name: pomodoro-cli
+Version: 0.1.9
+Summary: Simple command line pomodoro app with visualization of statistics
+Home-page: https://github.com/mehdidc/pomodoro
+Author: mehdi cherti
+Author-email: mehdicherti@gmail.com
+License: MIT
+Description: 
+        Simple command line pomodoro app with visualization of statistics.
+        
+        The Pomodoro technique is a time management technique for improving productivity.
+        Check (https://en.wikipedia.org/wiki/Pomodoro_Technique) for more details.
+        The code is based on : http://code.activestate.com/recipes/577358-pomodoro-timer/
+        
+Keywords: pomodoro productivity
+Platform: any
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development
+Classifier: Topic :: Scientific/Engineering
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Unix
+Classifier: Operating System :: MacOS

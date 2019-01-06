@@ -1,0 +1,11 @@
+README.md
+clock.mp3
+pomodoro
+pomostat
+setup.py
+pomodoro_cli.egg-info/PKG-INFO
+pomodoro_cli.egg-info/SOURCES.txt
+pomodoro_cli.egg-info/dependency_links.txt
+pomodoro_cli.egg-info/not-zip-safe
+pomodoro_cli.egg-info/requires.txt
+pomodoro_cli.egg-info/top_level.txt
