@@ -11,15 +11,6 @@ from datetime import datetime
 import os
 import sys
 
-try:
-    from PyQt5.QtWidgets import QMessageBox
-    from PyQt5.Qt import QApplication
-except ImportError:
-    has_qt = False
-else:
-    has_qt = True
-
-
 display = print
 script_dir = os.path.dirname(__file__)
 DATA_FILENAME = os.path.expanduser("~/.pomodoro")
