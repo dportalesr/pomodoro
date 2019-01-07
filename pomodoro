@@ -18,10 +18,10 @@ DATA_FILENAME = os.path.expanduser("~/.pomodoro")
 DEV_NULL = open(os.devnull, "w")
 
 
-def notify(title, content, more=''):
+def notify(title, content, sound, more=''):
     os.system("""osascript -e 'display notification "{}" \
               with title "{}" \
-              sound name "Glass"'""".format(content, title))
+              sound name "{}"'""".format(content, title, sound))
 
 
 def tick(duration, mode):
@@ -63,8 +63,8 @@ def resolve_time(input):
         return numeric_val * 60
 
 
-@modifiers.kwoargs('grace', 'repeat')
-def main(work='26', rest='6', grace='20s', repeat=6):
+@modifiers.kwoargs('grace', 'repeat', 'sound')
+def main(work='26', rest='6', grace='20s', repeat=6, sound='Glass'):
     """
     Any lapse argument is assumed in minutes by default, and in seconds if it's suffixed by an 's'.
 
@@ -79,6 +79,10 @@ def main(work='26', rest='6', grace='20s', repeat=6):
 
     repeat : int
         nb of cycles work-rest to do
+
+    sound : str
+        Name of the sound to play for notifications.
+        It refers to OSX sounds (/System/Library/Sounds): Basso, Blow, Bottle, Frog, Funk, Glass (Default), Hero, Morse, Ping, Pop, Purr, Sosumi, Submarine, Tink
     """
     for i in range(repeat):
         start = datetime.now()
@@ -87,7 +91,7 @@ def main(work='26', rest='6', grace='20s', repeat=6):
             break
         stop = datetime.now()
         write_pomo(start, stop, "work")
-        notify('🍅 Pomodoro done!', 'Rest easy.')
+        notify('🍅 Pomodoro done!', 'Rest easy.', sound)
 
         interrupted = tick(resolve_time(grace), 'Wrapping up')
         if interrupted:
@@ -103,12 +107,14 @@ def main(work='26', rest='6', grace='20s', repeat=6):
         display("\r\nCompleted %s/%s [at %s hrs]\r\n" % (i+1, repeat, datetime.now().strftime("%H:%M")))
 
         if i+1 < repeat:
-            notify('🍏 Pomodoro starting!', 'Back to work!')
+            notify('🍏 Pomodoro starting!', 'Back to work!', sound)
             interrupted = tick(resolve_time(grace), 'Getting ready')
             if interrupted:
                 break
         else:
-            display('Accomplished 🙌')
+            msg = 'Accomplished 🙌'
+            notify(msg, 'All pomodoros done!', sound)
+            display(msg)
 
 
 if __name__ == "__main__":
