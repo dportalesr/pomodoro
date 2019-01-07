@@ -22,15 +22,15 @@ After installation, it's safe to remove the repo completely.
 ## Usage
 
 ```bash
-pomodoro [work-minutes] [rest-minutes] [in-between-seconds] [repeat]
+pomodoro [work-minutes] [rest-minutes] --grace=[grace-time-seconds] --repeat=[repeat]
 ```
 
 Default values:
 
-- work time: 26 min
-- rest time: 6 min
-- in-between time (extra time before switching between work and rest mode): 20 seconds
-- repeat: 7 times
+- Work time: 26 min
+- Rest time: 6 min
+- Grace time before switching between work and rest: 20 seconds
+- Repeat: 6 times
 
 A Growl notification will be triggered at the end of pomodoros.
 
@@ -50,7 +50,7 @@ pomostat today
 pomostat yesterday
 ```
 
-Check `pomostat --help` for more information. 
+Check `pomostat --help` for more information.
 
 Here is an example of graph with `pomostat thisweek`:
 

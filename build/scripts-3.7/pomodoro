@@ -10,15 +10,7 @@ from datetime import timedelta
 from datetime import datetime
 import os
 import sys
-
-try:
-    from PyQt5.QtWidgets import QMessageBox
-    from PyQt5.Qt import QApplication
-except ImportError:
-    has_qt = False
-else:
-    has_qt = True
-
+import re
 
 display = print
 script_dir = os.path.dirname(__file__)
@@ -62,47 +54,61 @@ def write_pomo(start, stop, tag):
     fd.close()
 
 
-@modifiers.kwoargs('repeat')
-def main(work=26, rest=6, overtime=20, repeat=6):
+def resolve_time(input):
+    numeric_val = int(re.sub(r'[a-zA-Z]+', '', str(input)))
+
+    if 's' in input:
+        return numeric_val
+    else:
+        return numeric_val * 60
+
+
+@modifiers.kwoargs('grace', 'repeat')
+def main(work='26', rest='6', grace='20s', repeat=6):
     """
-    work : int
-        nb of minuntes of work
+    Any lapse argument is assumed in minutes by default, and in seconds if it's suffixed by an 's'.
 
-    rest : int
-        nb of minutes of rest
+    work : str
+        Lapse of work
 
-    overtime : int
-        nb of seconds extra before switching mode
+    rest : str
+        Lapse of rest
+
+    grace : str
+        Lapse of grace time before switching between work and rest
 
     repeat : int
         nb of cycles work-rest to do
     """
     for i in range(repeat):
         start = datetime.now()
-        interrupted = tick(int(work) * 60, 'Working')
+        interrupted = tick(resolve_time(work), 'Working')
         if interrupted:
             break
         stop = datetime.now()
         write_pomo(start, stop, "work")
         notify('🍅 Pomodoro done!', 'Rest easy.')
 
-        interrupted = tick(int(overtime), 'Wrapping up')
+        interrupted = tick(resolve_time(grace), 'Wrapping up')
         if interrupted:
             break
 
         start = datetime.now()
-        interrupted = tick(int(rest) * 60, 'Resting')
+        interrupted = tick(resolve_time(rest), 'Resting')
         if interrupted:
             break
         stop = datetime.now()
         write_pomo(start, stop, "rest")
 
-        display("\r\nCompleted %s/%s [%s]\r\n" % (i+1, repeat, datetime.now().strftime("%H:%M")))
+        display("\r\nCompleted %s/%s [at %s hrs]\r\n" % (i+1, repeat, datetime.now().strftime("%H:%M")))
         notify('🍏 Pomodoro started!', 'Back to work!')
 
-        interrupted = tick(int(overtime), 'Getting ready')
-        if interrupted:
-            break
+        if i+1 < repeat:
+            interrupted = tick(resolve_time(grace), 'Getting ready')
+            if interrupted:
+                break
+        else:
+            display('Accomplished 🙌')
 
 
 if __name__ == "__main__":
