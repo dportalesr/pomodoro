@@ -101,9 +101,9 @@ def main(work='26', rest='6', grace='20s', repeat=6):
         write_pomo(start, stop, "rest")
 
         display("\r\nCompleted %s/%s [at %s hrs]\r\n" % (i+1, repeat, datetime.now().strftime("%H:%M")))
-        notify('🍏 Pomodoro started!', 'Back to work!')
 
         if i+1 < repeat:
+            notify('🍏 Pomodoro starting!', 'Back to work!')
             interrupted = tick(resolve_time(grace), 'Getting ready')
             if interrupted:
                 break
