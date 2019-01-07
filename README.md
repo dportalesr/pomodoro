@@ -17,17 +17,19 @@ pip install -r requirements.txt
 python3 setup.py install
 ```
 
+After installation, it's safe to remove the repo completely.
 
 ## Usage
 
 ```bash
-pomodoro [work-minutes] [rest-minutes] [repeat]
+pomodoro [work-minutes] [rest-minutes] [in-between-seconds] [repeat]
 ```
 
 Default values:
 
 - work time: 26 min
 - rest time: 6 min
+- in-between time (extra time before switching between work and rest mode): 20 seconds
 - repeat: 7 times
 
 A Growl notification will be triggered at the end of pomodoros.
